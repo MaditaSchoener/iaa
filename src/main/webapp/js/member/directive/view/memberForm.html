@@ -1,0 +1,98 @@
+<head>
+<meta charset="UTF-8">
+</head>
+<form name="memberEditForm" class="container p-1">
+	<div class="row" style="margin: 0; min-width: 35rem;">
+		<h2 style="flex-grow: 1">{{member.number? 'Mitgliedbearbeitung':'Mitgliederfassung'}}</h2>
+		<button type="button" class="btn" ng-disabled="memberEditForm.$invalid || !memberEditForm.$dirty" 
+			ng-click="saveMember(member)" ng-show="!member.cancelled">{{member.number? 'Ändern': 'Anlegen'}}</button>
+		<button type="button" class="btn" ng-show="member.number && !member.cancelled" 
+			ng-click="cancelMember(member)" style="margin-left: 0.5rem" ng-disabled="memberEditForm.$dirty">Kündigen</button>
+		<button type="button" class="btn" ng-show="member.cancelled" 
+			ng-click="deleteMember(member)">Löschen</button>
+	</div>
+	<fieldset ng-disabled="member.cancelled">
+		<div class="form-group">
+			<label for="memberId">Mitgliedsnummer</label> 
+			<input id="memberId" ng-model="member.number" type="text" disabled class="form-control" />
+		</div>
+		<div class="row">
+			<div class="form-group col-6">
+				<label for="nameField">Vorname</label> 
+				<input id="nameField" ng-model="member.name" type="text" class="form-control" />
+			</div>
+			<div class="form-group col-6">
+				<label for="surnameField">Nachname</label> 
+				<input id="surnameField" ng-model="member.surname" type="text" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="birthField">Geburtstag</label> 
+			<input id="birthField" type="date" ng-model="member.birth" class="form-control" />
+		</div>
+		<div class="row">
+			<div class="form-group col-8">
+				<label for="membership">Mitgliedschaft</label> 
+				<select name="membership" ng-model="member.type" class="form-control" ng-change="getContribution(member)"
+					ng-options="membership for membership in memberships"></select>
+			</div>
+			<small ng-show="member.number && memberEditForm.membership.$dirty" class="form-text text-muted">
+				Beitragsänderungen finden zum Jahreswechsel statt.</small>
+			<small ng-show="member.number && member.willContributionChange" class="form-text text-muted">
+				Aktuell beträgt der Beitrag noch {{member.currentContribution}}€. Die Beitragsänderung findet zum Jahreswechsel statt.</small>
+			<div class="form-group col-4">
+				<label for="contribution">Beitrag</label> 
+				<input id="contribution" disabled type="text" class="form-control" ng-model="member.futureContribution"/>
+			</div>
+		</div>
+		<div class="form-check" ng-show="!member.number || member.familyMember">
+			 <label class="form-check-label">
+			    <input ng-disabled="member.number" type="checkbox"
+			    ng-change="selectFamilyMember()" class="form-check-input" style="margin-top:0.4rem" ng-model="hasFamilyMember">
+			    Familienmitglied {{member.familyMember.number? ' von ' + member.familyMember.name + ' ' 
+			    										+ member.familyMember.surname + ' (' +member.familyMember.number 
+			    										+ ')'
+			    									: ''}} 
+			  </label>
+			  <div class="infoBox" ng-show="hasFamilyMember && (!member.familyMember || !member.familyMember.number)">
+			  	Bitte wähle aus der linken Liste das Familienmitglied aus. Abbrechen kannst du dies durch Abwählen der Checkbox.
+			  </div>
+			</div>
+		<h3>Adresse</h3>
+		<div class="form-group">
+			<label for="street">Straße</label> 
+			<input id="street" ng-model="member.address.street" ng-change="updateStreets()" required
+				type="text" class="form-control" list="availableStreets"/>
+			<datalist id="availableStreets">
+				<option ng-repeat="street in streets" value="{{street}}"></option>	
+			</datalist>
+		</div>
+		<div class="row">
+			<div class="form-group col-4">
+				<label for="zip">PLZ</label> 
+				<input id="zip" ng-model="member.address.zip" ng-change="updateCity()" required
+					type="number" class="form-control" list="availableZips"/>
+				<datalist id="availableZips">
+					<option ng-repeat="zip in zips" value="{{zip}}"></option>
+				</datalist>
+			</div>
+			<div class="form-group col-8">
+				<label for="city">Stadt</label> 
+				<input id="city" ng-model="member.address.city" type="text" class="form-control" />
+			</div>
+		</div>
+		<h3>Bankverbindung</h3>
+		<div class="form-group row">
+			<label for="iban" class="col-form-label col-2">IBAN</label> 
+			<div class="col-10">
+				<input id="iban" ng-model="member.bankingDetails.iban" type="text" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="bic" class="col-form-label col-2">BIC</label> 
+			<div class="col-10">
+				<input id="bic" ng-model="member.bankingDetails.bic" type="text" class="form-control" />
+			</div>
+		</div>
+	</fieldset>
+</form>

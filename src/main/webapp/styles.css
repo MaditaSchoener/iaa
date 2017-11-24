@@ -1,0 +1,59 @@
+.form-group {
+	margin-bottom: 0.2rem;
+}
+
+.btn {
+	cursor: pointer;
+	border-radius: 2px;
+}
+
+.selectedRow {
+	background-color: rgb(93, 136, 179) !important;
+	color: white;
+}
+
+.searchContainer {
+	position: absolute;	
+	-webkit-box-shadow: 10px 10px 50px -4px rgba(31,27,31,1);
+    -moz-box-shadow: 10px 10px 50px -4px rgba(31,27,31,1);
+    box-shadow: 10px 10px 50px -4px rgba(31,27,31,1);
+    background-color: white;
+    border-radius: 0 0 0px 5px;
+    left: 1%;
+    width: 95%;
+    transition: top 1s ease-out;
+    top: -70%;
+}
+
+.searchContainer.searchContainerVisible {
+	top: 0px;
+}
+
+.infoBox {
+	position: absolute;
+    background-color: #59a1bb;
+    padding: 0.5rem;
+    color: white;
+    opacity: 1;
+    box-shadow: 2px 2px 17px 5px #584e4e;
+}
+
+.errorPopup {
+	position: absolute;
+    background-color: #f0593a;
+    top: 30%;
+    left: 20%;
+    width: 60%;
+    color: white;
+    cursor: pointer;
+}
+
+.searchContainer #searchButton, .searchContainer #cancelButton {
+	position: absolute;
+	border: 1px solid grey;
+    right: 0;
+    bottom: -38px;
+    border-radius: 0px 0px 5px 5px;
+    background-color: white;
+    box-shadow: 3px 4px 14px -4px rgba(31,27,31,1);
+}

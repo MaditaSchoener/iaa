@@ -1,0 +1,66 @@
+<head>
+<meta charset="UTF-8">
+</head>
+<form name="searchMemberForm" class="container searchContainer p-2" ng-class="{searchContainerVisible: searchOpened}">
+	<h2>Mitgliedersuche</h2>
+	<div class="row">
+		<div class="form-group col-6">
+			<label for="memberId">Mitgliedsnummer</label> 
+			<input id="memberId" type="text" class="form-control" ng-model="memberToSearch.number"/>
+		</div>
+		<div class="form-group col-6">
+			<label for="membership">Mitgliedschaft</label> 
+			<select id="membership" ng-model="memberToSearch.type" class="form-control"
+				ng-options="membership for membership in memberships"></select>
+		</div>
+	</div>
+	<div class="row">
+		<div class="form-group col-6">
+			<label for="nameField">Vorname</label> 
+			<input id="nameField" ng-model="memberToSearch.name" type="text" class="form-control" />
+		</div>
+		<div class="form-group col-6">
+			<label for="surnameField">Nachname</label> 
+			<input id="surnameField" ng-model="memberToSearch.surname" type="text" class="form-control" />
+		</div>
+	</div>
+	<div class="row">
+		<div class="form-group col-4">
+			<label for="zipField">PLZ</label> 
+			<input id="zipField" ng-model="memberToSearch.address.zip" type="text" class="form-control" />
+		</div>
+		<div class="form-group col-8">
+			<label for="streetField">Straße</label> 
+			<input id="streetField" ng-model="memberToSearch.address.street" type="text" class="form-control" />
+		</div>
+	</div>
+	<button id="searchButton" type="button" class="btn" ng-click="searchMember(memberToSearch)" 
+		style="right: 110px">Suchen</button>
+	<button id="cancelButton" type="button" class="btn" ng-click="searchOpened = false">Abbrechen</button>
+</form>
+<div class="row" style="margin: 0">
+	<h2 style="flex-grow: 1">Mitglieder</h2>
+	
+	<input type="text" ng-model="memberSearchQuery" placeholder="Schnellsuche" style="margin-right:0.25rem"/>
+	<button type="button" class="btn" ng-click="searchOpened = true" style="margin-right: 0.25rem">Suche öffnen</button>
+	<button type="button" class="btn" ng-click="print('memberList')">Liste drucken</button>
+</div>
+<table id="memberList" class="table table-striped">
+	<thead>
+		<tr>
+			<th>Mitgliedsnummer</th>
+			<th>Name</th>
+			<th>Mitgliedsart</th>
+			<th>Aktueller Beitrag</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="member in members | filter:memberSearchQuery" ng-click="selectMember(member)" 
+			ng-class="{selectedRow: member == selectedMember}" style="cursor: pointer">
+			<td>{{member.number}}</td>
+			<td>{{member.name}} {{member.surname}}</td>
+			<td>{{member.type}}</td>
+			<td>{{member.currentContribution}}</td>
+		</tr>
+	</tbody>
+</table>

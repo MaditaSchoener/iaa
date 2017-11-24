@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="memberManagement">
+<head>
+  <meta charset="UTF-8">
+  <title>Mitgliedsverwaltung</title>
+ 
+ <!-- Angular-Library -->
+  <script type="application/javascript" src="js/lib/angular.min.js"></script>
+  <script type="application/javascript" src="js/application.js"></script>
+  <script type="application/javascript" src="js/service/services.js"></script>
+  
+  <script type="application/javascript" src="js/member/controller/mainController.js"></script>
+  <script type="application/javascript" src="js/member/controller/memberFormController.js"></script>
+  <script type="application/javascript" src="js/member/directive/memberFormDirective.js"></script>
+  <script type="application/javascript" src="js/member/controller/memberListController.js"></script>
+  <script type="application/javascript" src="js/member/directive/memberListDirective.js"></script>
+  
+  <!-- bootstrap the application for simple styling -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" 
+  	integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+  </head>
+</head>
+<body class="container row p-3" style="margin: 0; max-width: 90%" ng-controller="mainController">
+	<member-list class="pr-3" style="flex-grow: 1; position: relative"></member-list>
+	<member-form></member-form>
+	<div class="errorPopup p-3" ng-show="messages && messages.length > 0" ng-click="messages = []">
+		<h3>Fehlermeldung{{messages.length > 1? 'en': ''}}</h3>
+		<div ng-repeat="message in messages">{{message}}</div>
+	</div>
+</body>
+</html>
