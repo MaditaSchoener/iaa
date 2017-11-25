@@ -6,7 +6,7 @@ import de.nordakademie.iaa.model.Address;
 
 public interface IAddressRepository {
 
-	Address create (Address address);
+	Address create (Address address) throws IllegalEntityException;
 	
 	List<Address> findMatchingAddresses (String street);
 	

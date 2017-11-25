@@ -1,5 +1,7 @@
 package de.nordakademie.iaa.model.repository;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +15,7 @@ import de.nordakademie.iaa.model.Membership;
 
 @Repository
 public class MemberRepository extends AbstractRepository <Member> implements IMemberRepository {
-
+	
 	private static final String MEMBER_VAR_NAME = " m";
 	private static final String SELECT_CLAUSE = "SELECT" + MEMBER_VAR_NAME + " FROM Member" + MEMBER_VAR_NAME;
 	
@@ -22,9 +24,15 @@ public class MemberRepository extends AbstractRepository <Member> implements IMe
 	}
   
 	@Override
-	public Member create(Member member) {
+	public Member create(Member member) throws IllegalEntityException {
+		validate(member);
 		return super.persist(member);
 	}	
+	@Override
+	public Member update(Member type) throws IllegalEntityException {
+		validate(type);
+		return super.update(type);
+	}
 	@Override
 	public List<Member> findAll() {
 		return entityManager().createQuery(SELECT_CLAUSE, Member.class).getResultList();
@@ -47,41 +55,58 @@ public class MemberRepository extends AbstractRepository <Member> implements IMe
 		}	
 	}
 	
+	private void validate (Member member) throws IllegalEntityException {
+		List <String> messages = new ArrayList<>();
+		if (member.getType() == null) {
+			messages.add("Es muss eine Mitgliedschaftsart ausgewählt sein!");
+		}
+		if (member.getName() == null || member.getName().trim().isEmpty()
+			|| member.getSurname() == null || member.getSurname().trim().isEmpty()) {
+			messages.add("Mitglieder müssen mit Vor-und Nachnamen eingetragen werden!");
+		}
+		if (member.getBirth() == null || member.getBirth().isAfter(LocalDate.now())) {
+			messages.add("Der Geburtstag eines Mitglieds darf nicht in der Zukunft liegen.");
+		}
+		if (!messages.isEmpty()) {
+			throw new IllegalEntityException(messages);
+		}
+	}
+	
 	public static class SearchCriteria {
 
 		private final StringBuilder searchCriteriaConcatinator = new StringBuilder();
 		private final Map <String, Object> queryVarsToSet = new HashMap<>();
 		
 		public SearchCriteria appendType(Membership membership) {
-			searchCriteriaConcatinator.append(MEMBER_VAR_NAME);
-			searchCriteriaConcatinator.append(".type = :type");
 			queryVarsToSet.put("type", membership);
-			return this;
+			return appendCriteria("type", ":type");
 		}
 		public SearchCriteria appendStreet(String street) {
-			searchCriteriaConcatinator.append(MEMBER_VAR_NAME);
-			searchCriteriaConcatinator.append(".address.street = ");
-			searchCriteriaConcatinator.append(street);
-			return this;
+			return appendCriteria("address.identification.street", markStringAsString(street));
 		}
 		public SearchCriteria appendZip(int zip) {
-			searchCriteriaConcatinator.append(MEMBER_VAR_NAME);
-			searchCriteriaConcatinator.append(".address.zip = ");
-			searchCriteriaConcatinator.append(zip);
-			return this;
+			return appendCriteria("address.identification.zip", zip);
 		}
 		public SearchCriteria appendName(String name) {
-			searchCriteriaConcatinator.append(MEMBER_VAR_NAME);
-			searchCriteriaConcatinator.append(".name = ");
-			searchCriteriaConcatinator.append(name);
-			return this;
+			return appendCriteria("name", markStringAsString(name));
 		}
 		public SearchCriteria appendSurname(String surname) {
-			searchCriteriaConcatinator.append(MEMBER_VAR_NAME);
-			searchCriteriaConcatinator.append(".surname = ");
-			searchCriteriaConcatinator.append(surname);
-			return this;
+			return appendCriteria("surname", markStringAsString(surname));
 		}	
+		private SearchCriteria appendCriteria (String propertyName, Object value) {
+			if (hasSearchCriteria()) {
+				searchCriteriaConcatinator.append(" AND ");
+			}
+			searchCriteriaConcatinator.append(MEMBER_VAR_NAME);
+			searchCriteriaConcatinator.append(".");
+			searchCriteriaConcatinator.append(propertyName);
+			searchCriteriaConcatinator.append(" = ");
+			searchCriteriaConcatinator.append(value);
+			return this;
+		}
+		private String markStringAsString (String string) {
+			return "'" + string + "'";
+		}
 		public boolean hasSearchCriteria () {
 			return searchCriteriaConcatinator.length() > 0;
 		}

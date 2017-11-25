@@ -20,7 +20,7 @@ public interface IMemberService {
 	
 	Member delete (Member member) throws ServiceException;
 	
-	Member cancelContract (Member member);
+	Member cancelContract (Member member) throws ServiceException;
 	
 	Contribution calculateContribution (Member member);
 }

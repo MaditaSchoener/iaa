@@ -119,6 +119,9 @@ public class Member implements Serializable {
 		contribution.setYear(year);
 		contributions.put(year, contribution);
 	}
+	public void removeContribution (int year) {
+		contributions.remove(year);
+	}
 	public int getCurrentContribution() {
 		Contribution contributionForYear = contributions.get(LocalDate.now().getYear());
 		return contributionForYear != null? contributionForYear.getAmount(): 0;

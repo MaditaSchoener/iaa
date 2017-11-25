@@ -4,7 +4,8 @@ application.controller('memberFormController', [
   '$scope',
   'memberService',
   'addressService',
-  ($scope, memberService, addressService) => {
+  'bankingDetailsService',
+  ($scope, memberService, addressService, bankingDetailsService) => {
 	 
 	  memberService.readMemberships().then(response => $scope.memberships = response.data);
 	  
@@ -51,9 +52,9 @@ application.controller('memberFormController', [
 			  memberService.createMember(member).then(response => {
 				  $scope.members.push(response.data);
 				  _acceptResponseData(response);
-			  });
+			  }, $scope.displayError);
 		  } else {
-			  memberService.updateMember(member).then(_acceptResponseData);
+			  memberService.updateMember(member).then(_acceptResponseData, $scope.displayError);
 		  }
 	  }
 	  $scope.cancelMember = (member) => {
@@ -90,6 +91,16 @@ application.controller('memberFormController', [
 		  var street = $scope.member.address.street;
 		  var zip = $scope.member.address.zip;
 		  addressService.findAddress(street, zip).then(response => $scope.member.address.city = response.data.city);
+	  }
+	  
+	  $scope.updateIbans = () => {
+		  var iban = $scope.member.bankingDetails.iban;
+		  bankingDetailsService.availableIbans(iban).then(response => $scope.availableIbans = response.data);
+		  bankingDetailsService.findBankingDetails(iban).then(response => {
+			  if (response.data && response.data.iban) {
+				  $scope.member.bankingDetails.bic = response.data.bic;
+			  }
+		  })
 	  }
   }
 ]);

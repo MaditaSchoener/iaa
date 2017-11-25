@@ -65,8 +65,12 @@ public class MemberController {
 	}
 
 	@PostMapping(path = "/cancel")
-	public Member cancelMember(@RequestBody final Member member) {
-		return memberService.cancelContract(member);
+	public Member cancelMember(@RequestBody final Member member) throws RestException {
+		try {
+			return memberService.cancelContract(member);
+		} catch (ServiceException e) {
+			throw new RestException(e.getMessages());
+		}
 	}
 
 	@PostMapping(path = "/delete")

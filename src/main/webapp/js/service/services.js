@@ -24,3 +24,12 @@ application.service('addressService', [
 		this.findAddress = (street, zip) => $http.get('/iaa/api/address/find?street=' + street + '&zip=' + zip);
 	}
 ]);
+
+application.service('bankingDetailsService', [
+	'$http',
+	function ($http) {
+		this.availableIbans = (start) => $http.get('/iaa/api/bankingDetails/ibans?start=' + start);
+		this.findBankingDetails = (iban) => $http.get('/iaa/api/bankingDetails/find?iban=' + iban);
+	}
+]);
+

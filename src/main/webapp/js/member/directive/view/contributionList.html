@@ -1,0 +1,31 @@
+<head>
+<meta charset="UTF-8">
+</head>
+<div class="row" style="margin: 0">
+	<h2 style="flex-grow: 1">Mitgliedsbeiträge</h2>
+	
+	<input type="number" maxlength="5" ng-model="displayedYear" placeholder="Für Jahr" style="margin-right:0.25rem"
+		ng-change="readContributionsForYear(displayedYear)" required/>
+	<button type="button" class="btn" ng-click="print('contributionList')" style="margin-right: 0.25rem">Liste drucken</button>
+	<button type="button" class="btn" ng-click="contributionListVisible = false">Schließen</button>
+</div>
+<table id="contributionList" class="table table-striped">
+	<thead>
+		<tr>
+			<th>Mitglied</th>
+			<th>IBAN</th>
+			<th>BIC</th>
+			<th>Zu Zahlender Beitrag</th>
+			<th>Bezahlt</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="member in membersWithContributioInYear">
+			<td>{{member.name}} {{member.surname}} ({{member.number}})</td>
+			<td>{{member.bankingDetails.iban}}</td>
+			<td>{{member.bankingDetails.bic}}</td>
+			<td>{{member.contributions[displayedYear].amount}}</td>
+			<td>{{member.contributions[displayedYear].paid? 'Ja': 'Nein'}}</td>
+		</tr>
+	</tbody>
+</table>

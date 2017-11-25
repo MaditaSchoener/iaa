@@ -3,6 +3,7 @@ package de.nordakademie.iaa.service;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import de.nordakademie.iaa.model.Membership;
 import de.nordakademie.iaa.model.repository.IAddressRepository;
 import de.nordakademie.iaa.model.repository.IBankingDetailsRepository;
 import de.nordakademie.iaa.model.repository.IMemberRepository;
+import de.nordakademie.iaa.model.repository.IllegalEntityException;
 import de.nordakademie.iaa.model.repository.MemberRepository.SearchCriteria;
 
 @Service
@@ -42,23 +44,31 @@ public class MemberService implements IMemberService {
 	
 	@Override
 	@Transactional
-	public Member create(Member member) {
+	public Member create(Member member) throws ServiceException {
 		mergeAssociations(member);
 		member.setContribution(LocalDate.now().getYear(), calculateContribution(member));
-		return repository.create(member);
+		try {
+			return repository.create(member);
+		} catch (IllegalEntityException e) {
+			throw new ServiceException(e.getMessages());
+		}
 	}
 
 	
 	@Override
 	@Transactional
-	public Member update(Member member) {
+	public Member update(Member member) throws ServiceException {
 		mergeAssociations(member);
 //		calculate the contribution for the next year if the membership changed
 		Member persistentMember = repository.find(member.getNumber());
 		if (persistentMember.getType() != member.getType()) {
 			member.setContribution(LocalDate.now().getYear() + 1, calculateContribution(member));
 		}
-		return repository.update(member);
+		try {
+			return repository.update(member);
+		} catch (IllegalEntityException e) {
+			throw new ServiceException(e.getMessages());
+		}
 	}
 	
 	@Override
@@ -74,10 +84,16 @@ public class MemberService implements IMemberService {
 	
 	@Override
 	@Transactional
-	public Member cancelContract(Member member) {
+	public Member cancelContract(Member member) throws ServiceException {
 		LocalDate cancelDate = LocalDate.now();
 		LocalDate exitDate = LocalDate.of(cancelDate.getYear(), 12, 31);
 		member.cancelContract(cancelDate, exitDate);
+		member.getContributions()
+				.keySet()
+				.stream()
+				.filter(cont -> cont > LocalDate.now().getYear())
+				.collect(Collectors.toList())
+				.forEach(member::removeContribution);
 		return this.update(member);
 	}
 	
@@ -90,15 +106,15 @@ public class MemberService implements IMemberService {
 			if (member.getType() != null) {
 				criteria.appendType(member.getType());
 			}
-			if (member.getName() != null) {
+			if (member.getName() != null && !member.getName().trim().isEmpty()) {
 				criteria.appendName(member.getName());
 			}
-			if (member.getSurname() != null) {
+			if (member.getSurname() != null && !member.getSurname().trim().isEmpty()) {
 				criteria.appendSurname(member.getSurname());
 			}
 			Address address = member.getAddress();
 			if (address != null) {
-				if (address.getStreet() != null) {
+				if (address.getStreet() != null && !address.getStreet().trim().isEmpty()) {
 					criteria.appendStreet(address.getStreet());
 				}
 				if (address.getZip() > 0) {
@@ -109,13 +125,20 @@ public class MemberService implements IMemberService {
 		}
 	}
 	
-	private void mergeAssociations(Member member) {
-		mergeMembersAddress(member);
-		mergeMembersBankingDetails(member);
+	private void mergeAssociations(Member member) throws ServiceException {
+		try {
+			mergeMembersAddress(member);
+			mergeMembersBankingDetails(member);
+		} catch (IllegalEntityException e) {
+			throw new ServiceException(e.getMessages());
+		}
 	}
 
-	private void mergeMembersAddress(Member member) {
+	private void mergeMembersAddress(Member member) throws IllegalEntityException {
 		Address memberAddress = member.getAddress();
+		if (memberAddress == null) {
+			throw new IllegalEntityException("Ein Kunde muss eine Adresse haben!");
+		}
 		Address persistentAddress = addressRepository.findAddress(memberAddress.getStreet(), memberAddress.getZip());
 		if (persistentAddress == null) {
 			addressRepository.create(memberAddress);
@@ -123,8 +146,11 @@ public class MemberService implements IMemberService {
 			member.setAddress(persistentAddress);
 		}
 	}
-	private void mergeMembersBankingDetails(Member member) {
+	private void mergeMembersBankingDetails(Member member) throws IllegalEntityException {
 		BankingDetails bankingDetails = member.getBankingDetails();
+		if (bankingDetails == null || bankingDetails.getIban() == null) {
+			throw new IllegalEntityException("Ein Kunde muss BankDetails hinterlegt haben!");
+		}
 		BankingDetails persistentDetails = bankingDetailsRepository.findByIban(bankingDetails.getIban());
 		if (persistentDetails == null) {
 			bankingDetailsRepository.create(bankingDetails);

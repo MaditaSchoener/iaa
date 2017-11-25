@@ -14,7 +14,9 @@
   <script type="application/javascript" src="js/member/directive/memberFormDirective.js"></script>
   <script type="application/javascript" src="js/member/controller/memberListController.js"></script>
   <script type="application/javascript" src="js/member/directive/memberListDirective.js"></script>
-  
+  <script type="application/javascript" src="js/member/controller/contributionListController.js"></script>
+  <script type="application/javascript" src="js/member/directive/contributionListDirective.js"></script>
+ 
   <!-- bootstrap the application for simple styling -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" 
   	integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -28,5 +30,6 @@
 		<h3>Fehlermeldung{{messages.length > 1? 'en': ''}}</h3>
 		<div ng-repeat="message in messages">{{message}}</div>
 	</div>
+	<contribution-list ng-show="contributionListVisible" class="popupContainer p-4"></contribution-list>
 </body>
 </html>

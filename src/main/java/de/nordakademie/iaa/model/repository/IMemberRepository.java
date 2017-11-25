@@ -14,9 +14,9 @@ public interface IMemberRepository {
 	List <Member> search (SearchCriteria criteria);
 	
 	
-	Member create(Member member);
+	Member create(Member member) throws IllegalEntityException ;
 	
-	Member update(Member member);
+	Member update(Member member) throws IllegalEntityException ;
 	
 	void delete(Member member);
 }

@@ -22,11 +22,11 @@
     left: 1%;
     width: 95%;
     transition: top 1s ease-out;
-    top: -70%;
+    top: -40rem;
 }
 
 .searchContainer.searchContainerVisible {
-	top: 0px;
+	top: 0;
 }
 
 .infoBox {
@@ -46,6 +46,20 @@
     width: 60%;
     color: white;
     cursor: pointer;
+}
+
+.popupContainer {
+	position: absolute;
+    top: 0;
+    width: 80%;
+    top: 5%;
+    left: 10%;
+    height: 80%;
+    background-color: white;
+    -webkit-box-shadow: 10px 10px 50px -4px rgba(31,27,31,1);
+    -moz-box-shadow: 10px 10px 50px -4px rgba(31,27,31,1);
+    box-shadow: 10px 10px 50px -4px rgba(31,27,31,1);
+    
 }
 
 .searchContainer #searchButton, .searchContainer #cancelButton {

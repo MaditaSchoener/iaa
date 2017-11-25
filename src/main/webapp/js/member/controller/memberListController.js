@@ -24,6 +24,11 @@ application.controller('memberListController', [
 		  });
 	  }
 	  
+	  $scope.resetSearch = () => {
+		  $scope.memberToSearch = {};
+		  $scope.searchMember ($scope.memberToSearch);
+	  }
+	  
 	  $scope.selectMember = (member) => {
 		  if ($scope.selectedMember == member) {
 			  $scope.selectedMember = {};

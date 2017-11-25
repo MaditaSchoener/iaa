@@ -23,7 +23,7 @@ abstract class AbstractRepository<TYPE> {
 	public void delete (final TYPE object) {
 		entityManager.remove(object);
 	}
-	public TYPE update (final TYPE type) {
+	public TYPE update (final TYPE type) throws IllegalEntityException {
 		return entityManager.merge(type);
 	}
 	protected EntityManager entityManager () {

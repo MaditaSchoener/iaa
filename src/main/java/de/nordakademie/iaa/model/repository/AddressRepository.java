@@ -1,5 +1,6 @@
 package de.nordakademie.iaa.model.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -11,12 +12,19 @@ import de.nordakademie.iaa.model.Address;
 @Repository
 public class AddressRepository extends AbstractRepository<Address> implements IAddressRepository {
 
+	private static final String STREET_PATTERN = "[a-zA-Zäöüß]+( )?[0-9]+[a-zA-Z]?";
+	private static final String CITY_PATTERN = "[a-zA-Zäöüß]+";
+	
 	public AddressRepository() {
 		super(Address.class);
 	}
 
 	@Override
-	public Address create(Address address) {
+	public Address create(Address address) throws IllegalEntityException {
+		List <String> messages = validate(address);
+		if (!messages.isEmpty()) {
+			throw new IllegalEntityException(messages);
+		}
 		return super.persist(address);
 	}
 	@Override
@@ -38,5 +46,19 @@ public class AddressRepository extends AbstractRepository<Address> implements IA
 		List <Address> matchingAddresses = query.getResultList();
 //		only one can be present
 		return matchingAddresses.isEmpty()? null: matchingAddresses.get(0);
+	}
+	
+	private List <String> validate (Address address) {
+		List <String> messages = new ArrayList<>();
+		if (address.getStreet() == null || !address.getStreet().trim().matches(STREET_PATTERN)) {
+			messages.add("Ungültige Straße. Bitte geben Sie eine gültige Straße mit Hausnummer ein");
+		}
+		if (address.getZip() < 1001) {
+			messages.add("Ungültige Postleitzahl. Bitte geben Sie eine gültige fünfstellige Postleitzahl ein.");
+		}
+		if (address.getCity() == null || !address.getCity().trim().matches(CITY_PATTERN)) {
+			messages.add("Ungültige Stadt. Bitte geben Sie eine gültige Stadt ein");
+		}
+		return messages;
 	}
 }

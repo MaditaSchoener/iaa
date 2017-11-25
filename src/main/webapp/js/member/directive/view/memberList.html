@@ -35,17 +35,20 @@
 		</div>
 	</div>
 	<button id="searchButton" type="button" class="btn" ng-click="searchMember(memberToSearch)" 
-		style="right: 110px">Suchen</button>
+		style="right: 285px">Suchen</button>
+		<button id="searchButton" type="button" class="btn" ng-click="resetSearch()" 
+		style="right: 110px">Suche Zurücksetzen</button>
 	<button id="cancelButton" type="button" class="btn" ng-click="searchOpened = false">Abbrechen</button>
 </form>
 <div class="row" style="margin: 0">
 	<h2 style="flex-grow: 1">Mitglieder</h2>
 	
-	<input type="text" ng-model="memberSearchQuery" placeholder="Schnellsuche" style="margin-right:0.25rem"/>
-	<button type="button" class="btn" ng-click="searchOpened = true" style="margin-right: 0.25rem">Suche öffnen</button>
-	<button type="button" class="btn" ng-click="print('memberList')">Liste drucken</button>
+	<button type="button" class="btn" ng-click="initContributionList()" style="margin-right: 0.25rem">Beiträge anzeigen</button>
+	<button type="button" class="btn" ng-click="print('memberList')" style="margin-right: 0.25rem">Liste drucken</button>
+	<button type="button" class="btn" ng-click="searchOpened = true" style="margin-right:0.25rem">Suche öffnen</button>
+	<input type="text" ng-model="memberSearchQuery" placeholder="Schnellsuche"/>
 </div>
-<table id="memberList" class="table table-striped">
+<table id="memberList" class="table table-striped" style="min-height: 50%;">
 	<thead>
 		<tr>
 			<th>Mitgliedsnummer</th>

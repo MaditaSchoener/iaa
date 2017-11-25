@@ -19,31 +19,32 @@
 		<div class="row">
 			<div class="form-group col-6">
 				<label for="nameField">Vorname</label> 
-				<input id="nameField" ng-model="member.name" type="text" class="form-control" />
+				<input id="nameField" ng-model="member.name" type="text" required class="form-control" />
 			</div>
 			<div class="form-group col-6">
 				<label for="surnameField">Nachname</label> 
-				<input id="surnameField" ng-model="member.surname" type="text" class="form-control" />
+				<input id="surnameField" ng-model="member.surname" type="text" required class="form-control" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="birthField">Geburtstag</label> 
-			<input id="birthField" type="date" ng-model="member.birth" class="form-control" />
+			<input id="birthField" type="date" ng-model="member.birth" class="form-control" required min="new Date()" />
 		</div>
 		<div class="row">
 			<div class="form-group col-8">
 				<label for="membership">Mitgliedschaft</label> 
 				<select name="membership" ng-model="member.type" class="form-control" ng-change="getContribution(member)"
-					ng-options="membership for membership in memberships"></select>
+					ng-options="membership for membership in memberships" required></select>
 			</div>
-			<small ng-show="member.number && memberEditForm.membership.$dirty" class="form-text text-muted">
-				Beitragsänderungen finden zum Jahreswechsel statt.</small>
-			<small ng-show="member.number && member.willContributionChange" class="form-text text-muted">
-				Aktuell beträgt der Beitrag noch {{member.currentContribution}}€. Die Beitragsänderung findet zum Jahreswechsel statt.</small>
 			<div class="form-group col-4">
 				<label for="contribution">Beitrag</label> 
 				<input id="contribution" disabled type="text" class="form-control" ng-model="member.futureContribution"/>
 			</div>
+			<small ng-show="member.number && memberEditForm.membership.$dirty" class="form-text text-muted col-12" style="width:1px">
+				Beitragsänderungen finden zum Jahreswechsel statt.</small>
+			<small ng-show="member.number && member.willContributionChange" class="form-text text-muted col-12" style="width:1px">
+				Aktuell beträgt der Beitrag noch {{member.currentContribution}}€. Die Beitragsänderung findet zum Jahreswechsel statt.</small>
+			
 		</div>
 		<div class="form-check" ng-show="!member.number || member.familyMember">
 			 <label class="form-check-label">
@@ -70,28 +71,32 @@
 		<div class="row">
 			<div class="form-group col-4">
 				<label for="zip">PLZ</label> 
-				<input id="zip" ng-model="member.address.zip" ng-change="updateCity()" required
-					type="number" class="form-control" list="availableZips"/>
+				<input id="zip" ng-model="member.address.zip" ng-change="updateCity()" maxlength="5" min="1000"
+					type="number" class="form-control" list="availableZips" required/>
 				<datalist id="availableZips">
 					<option ng-repeat="zip in zips" value="{{zip}}"></option>
 				</datalist>
 			</div>
 			<div class="form-group col-8">
 				<label for="city">Stadt</label> 
-				<input id="city" ng-model="member.address.city" type="text" class="form-control" />
+				<input id="city" ng-model="member.address.city" required type="text" class="form-control" />
 			</div>
 		</div>
 		<h3>Bankverbindung</h3>
 		<div class="form-group row">
 			<label for="iban" class="col-form-label col-2">IBAN</label> 
 			<div class="col-10">
-				<input id="iban" ng-model="member.bankingDetails.iban" type="text" class="form-control" />
+				<input id="iban" ng-model="member.bankingDetails.iban" ng-change="updateIbans()" type="text" 
+					class="form-control" list="ibanList" required/>
+				<datalist id="ibanList">
+					<option ng-repeat="iban in availableIbans" value="{{iban}}"></option>	
+				</datalist>
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="bic" class="col-form-label col-2">BIC</label> 
 			<div class="col-10">
-				<input id="bic" ng-model="member.bankingDetails.bic" type="text" class="form-control" />
+				<input id="bic" ng-model="member.bankingDetails.bic" type="text" required class="form-control" />
 			</div>
 		</div>
 	</fieldset>
