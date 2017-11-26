@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * @author Maik Voigt
- *
  * Aufzählung der Mitgliedsarten, sowie der zugehörigen Preise. Festlegung des Familienrabatts.
+ *
+ * @author Maik Voigt
  */
 
 public enum Membership {

@@ -22,13 +22,13 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
- * @author Maik Voigt
- *
  * Fachmodell für ein Mitglied. Besteht aus einer generierten Mitglieds ID, dem Vornamen, Nachnamen, Geburtstag,
  * Beitrittsdatum, der Mitgliedsart, dem Inaktivitätszustand (wenn gekündigt wird), dem eventuellen Familienmitglied
  * und den Bankdetails.
  * Beinhaltet  auch die Funktionalität, den Mitgliedsbeitrag für andere Jahre festzulegen, sowie Prüfungen ob der
  * Beitrag sich im nächsten Jahr ändert.
+ *
+ * @author Maik Voigt
  */
 
 @Entity
@@ -61,9 +61,11 @@ public class Member implements Serializable {
 	private Address address;
 	@ManyToOne
 	private BankingDetails bankingDetails;
-	
-//	Fetch the contributions eagerly to determine the currentContribution (no performance issues expected because not
-//	that many datasets)
+
+	/**
+	 * Fetch the contributions eagerly to determine the currentContribution (no performance issues expected
+	 * because not that many datasets)
+ 	 */
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@MapKey(name="year")
 	private Map <Integer, Contribution> contributions = new HashMap<>();
@@ -72,7 +74,12 @@ public class Member implements Serializable {
 	protected void beforePersist () {
 		this.entryDate = LocalDate.now();
 	}
-	
+
+	/**
+	 * Bricht einen Vertrag ab. Erstellt dazu ein Inactivity Objekt und füllt es mit Daten.
+	 * @param cancelDate Datum, an welchem die Kündigung ausgelöst wurde als LocalDate Objekt
+	 * @param exitDate Datum, an welchem die Kündigung in Kraft tritt als LocalDate
+	 */
 	public void cancelContract(LocalDate cancelDate, LocalDate exitDate) {
 		this.inactivity = new Inactivity();
 		this.inactivity.setCancellationDate(cancelDate);
@@ -124,7 +131,7 @@ public class Member implements Serializable {
 	public void setFamilyMember(Member familyMember) {
 		this.familyMember = familyMember;
 	}
-	
+
 	public void setContribution (int year, Contribution contribution) {
 		contribution.setYear(year);
 		contributions.put(year, contribution);
@@ -132,17 +139,33 @@ public class Member implements Serializable {
 	public void removeContribution (int year) {
 		contributions.remove(year);
 	}
+
+	/**
+	 * Gibt den Mitgliedsbeitrag des aktuellen Jahres zurück
+	 * @return Mitgliedsbeitrag als Integer
+	 */
 	public int getCurrentContribution() {
 		Contribution contributionForYear = contributions.get(LocalDate.now().getYear());
 		return contributionForYear != null? contributionForYear.getAmount(): 0;
 	}
+
+	/**
+	 * Gibt den Mitgliedsbeitrag des nächsten Jahres zurück
+	 * @return Mitgliedsbeitrag als Integer
+	 */
 	public int getFutureContribution() {
 		Contribution futureContribution = contributions.get(LocalDate.now().getYear() + 1);
 		return futureContribution != null? futureContribution.getAmount(): getCurrentContribution();
 	}
+
+	/**
+	 * Prüfung, ob Beitrag im nächsten Jahr anders sein wird
+	 * @return Ergebnis als Boolean
+	 */
 	public boolean getWillContributionChange () {
 		return getCurrentContribution() != getFutureContribution();
 	}
+
 	public Map <Integer, Contribution> getContributions () {
 		return Collections.unmodifiableMap(contributions);
 	}
@@ -166,6 +189,10 @@ public class Member implements Serializable {
 		return number;
 	}
 
+	/**
+	 * Erstellt einen Hash-Code für Hash-Tabellen
+	 * @return Hashwert als Integer
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -174,6 +201,11 @@ public class Member implements Serializable {
 		return result;
 	}
 
+	/**
+	 * Definition von Vergleichsoperationen
+	 * @param obj Das Vergleichsobjekt von Typ Object
+	 * @return Vergleichsresultat als Boolean
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

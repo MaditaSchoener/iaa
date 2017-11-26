@@ -6,9 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @author Maik Voigt
- *
  * Fachmodell für die Bankdetails, welche aus IBAN und BIC bestehen.
+ * @author Maik Voigt
  */
 
 @Entity
@@ -33,7 +32,11 @@ public class BankingDetails {
 	public void setBIC(String bankName) {
 		this.bic = bankName;
 	}
-	
+
+	/**
+	 * Erstellt einen Hash-Code für Hash-Tabellen
+	 * @return Hashwert als Integer
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -41,6 +44,12 @@ public class BankingDetails {
 		result = prime * result + ((iban == null) ? 0 : iban.hashCode());
 		return result;
 	}
+
+	/**
+	 * Definition von Vergleichsoperationen
+	 * @param obj Das Vergleichsobjekt von Typ Object
+	 * @return Vergleichsresultat als Boolean
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

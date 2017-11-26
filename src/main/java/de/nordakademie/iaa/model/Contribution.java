@@ -7,9 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @author Maik Voigt
- *
  * Fachmodell für die Mitgliederbeiträge. Besteht aus Betrag, Jahr und einem Boolean, der Auskunft gibt ob bezahlt wurde.
+ *
+ * @author Maik Voigt
  */
 
 @Entity
@@ -48,6 +48,10 @@ public class Contribution {
 		this.year = year;
 	}
 
+	/**
+	 * Erstellt einen Hash-Code für Hash-Tabellen
+	 * @return Hashwert als Integer
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -55,6 +59,12 @@ public class Contribution {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
+	/**
+	 * Definition von Vergleichsoperationen
+	 * @param obj Das Vergleichsobjekt von Typ Object
+	 * @return Vergleichsresultat als Boolean
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
