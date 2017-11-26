@@ -1,5 +1,6 @@
 /*
 // @author Madita Schöner
+//
 // Controller für die main.html
 */
 
@@ -11,7 +12,7 @@ application.controller('mainController', [
     /*
 	* Öffnet eine Druckseite der Mitglieder, mit dem gleichen Styling der Application
 	* @public
-	* @param elementId MitgliederListe (memberList) als element
+	* @param elementId {String} memberList
 	* */
 	  $scope.print = (elementId) => {
 		  var element = document.getElementById(elementId);
@@ -28,9 +29,9 @@ application.controller('mainController', [
 	  }
 
 	/*
-	* Öffnet eine Druckseite der Mitglieder, mit dem gleichen Styling der Application
+	* Ersetzt die vom Server gelieferten Dates mit Java Script Dates
 	* @public
-	* @param elementId MitgliederListe (memberList) als element
+	* @param member {Object}  Mitglied
 	* */
 	  $scope.replaceDateArraysWithDates = (member) => {
 		  member.birth = new Date(member.birth[0], member.birth[1] - 1, member.birth[2]);
@@ -38,7 +39,7 @@ application.controller('mainController', [
 
 /*	* Anzeigen der Error-Nachrichten
 	* @public
-	* @param Objekt der Fehlermeldung
+	* @param response {Object} Fehlermeldung
 	* */
 	  $scope.displayError = (response) => {
 		  $scope.messages = response.data.messages;

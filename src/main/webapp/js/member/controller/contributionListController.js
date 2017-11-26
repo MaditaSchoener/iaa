@@ -1,6 +1,7 @@
 /*
 // @author Madita Schöner
-Controller für die contributionList.hmtl
+//
+// Controller für die contributionList.hmtl
 */
 
 
@@ -11,7 +12,7 @@ application.controller('contributionListController', [
   ($scope) => {
 
 	/*
-	*Öffnet die Beitragsliste für das aktuelle Jahr
+	* Öffnet die Beitragsliste für das aktuelle Jahr
 	* @public
 	* */
 	  $scope.initContributionList = () => {
@@ -21,10 +22,12 @@ application.controller('contributionListController', [
 	  }
 
 	/*
-	*Ändert das Default Jahr (aktuelles Jahr) auf ein gesetztes
+	* Ändert das Default Jahr (aktuelles Jahr) auf ein gesetztes und filtert die Mitglieder die
+	* in dem gesetzten Jahr einen Betrag zahlen muss
 	* @public
-	* @param year das Jahr, welches als Filterkriterium gesetzt wird
-	* @returns die gefilterte Liste
+	* @param year {Integer} das Jahr, welches als Filterkriterium gesetzt wird
+	* @param Contribution {Object} das Jahr, welches als Filterkriterium gesetzt wird
+	* @returns {Array} gefilterte Mitglieder und deren zu entrichtende Beiträge für das gesetzte Jahr
 	* */
 $scope.readContributionsForYear = (year) => {
 		  $scope.displayedYear = year;
