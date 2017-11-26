@@ -1,7 +1,7 @@
 /*
-// @author Madita Schöner
-//
-// Controller für memberForm.html
+* @author Madita Schöner
+*
+* Controller für memberForm.html
 */
 
 'use strict';

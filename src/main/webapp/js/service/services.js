@@ -1,6 +1,9 @@
 /*
-// @author Madita Schöner
+* @author Madita Schöner
+* Verweise auf die Rest Schnittstelle
+*
 */
+
 'use strict';
 
 application.service('memberService', [

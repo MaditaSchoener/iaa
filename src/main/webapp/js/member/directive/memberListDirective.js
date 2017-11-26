@@ -1,5 +1,6 @@
 /*
-// @author Madita Schöner
+* @author Madita Schöner
+* Referenz-Datei für memberList.html. Verweist auf die zugehörige view und auf den Controller
 */
 'use strict';
 

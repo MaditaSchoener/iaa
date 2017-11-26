@@ -1,7 +1,7 @@
 /*
-// @author Madita Schöner
-//
-// Controller für die main.html
+* @author Madita Schöner
+*
+* Controller für die main.html
 */
 
 'use strict';
