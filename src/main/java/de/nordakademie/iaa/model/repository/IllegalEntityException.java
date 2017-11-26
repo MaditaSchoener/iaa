@@ -20,16 +20,26 @@ public class IllegalEntityException  extends Exception {
 		super();
 		this.messages = messages;
 	}
+
+	/**
+	 * Erzeugt Exceptions und fügt die übergebene Fehlermeldung an das Nachrichtenarray
+	 * @param message Fehlermeldung als String
+	 */
 	public IllegalEntityException(String message) {
 		this (Arrays.asList(message));
 	}
 	public IllegalEntityException() {
 		this (new ArrayList<>());
 	}
-	
+
+	/**
+	 * Fügt eine Nachricht der Exception hinzu
+	 * @param message Fehlermeldung als String
+	 */
 	public void addMessage (String message) {
 		messages.add(message);
 	}	
+
 	public List<String> getMessages() {
 		return messages;
 	}

@@ -5,9 +5,9 @@ import java.util.List;
 import de.nordakademie.iaa.model.BankingDetails;
 
 /**
- * @author Maik Voigt
- *
  * Interface des Repository der Bankdaten
+ *
+ * @author Maik Voigt
  */
 
 public interface IBankingDetailsRepository {

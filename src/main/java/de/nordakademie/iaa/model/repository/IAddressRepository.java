@@ -5,9 +5,9 @@ import java.util.List;
 import de.nordakademie.iaa.model.Address;
 
 /**
- * @author Maik Voigt
- *
  * Interface des Repository der Adressen
+ *
+ * @author Maik Voigt
  */
 
 public interface IAddressRepository {

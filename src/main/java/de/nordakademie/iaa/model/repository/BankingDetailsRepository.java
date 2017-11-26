@@ -25,6 +25,12 @@ public class BankingDetailsRepository extends AbstractRepository<BankingDetails>
 		super(BankingDetails.class);
 	}
 
+	/**
+	 * Untersucht, ob die IBAN bereits vorhanden ist
+	 *
+	 * @param iban IBAN als String
+	 * @return Gibt die Banking Details zurück, falls die IBAN gefunden wurde
+	 */
 	@Override
 	public BankingDetails findByIban(String iban) {
 		TypedQuery<BankingDetails> query = entityManager()
@@ -35,6 +41,12 @@ public class BankingDetailsRepository extends AbstractRepository<BankingDetails>
 		return details.isEmpty() ? null : details.get(0);
 	}
 
+	/**
+	 * Erstellt neue Bankdaten. Wirft Exception falls sie ungültig sind.
+	 *
+	 * @param details BankDetails Objekt
+	 * @throws IllegalEntityException Exception falls die Bankdaten nicht validiert werden konnten.
+	 */
 	@Override
 	public BankingDetails create(BankingDetails details) throws IllegalEntityException {
 		List <String> validationErrors = validate (details);
@@ -44,6 +56,12 @@ public class BankingDetailsRepository extends AbstractRepository<BankingDetails>
 		return super.persist(details);
 	}
 
+	/**
+	 * Prüft, ob eine IBAN mit dem Zeichenanfang vorhanden ist
+	 *
+	 * @param ibanStart String mit den ersten Zeichen der IBAN
+	 * @return Gibt die Ergebnisliste zurück
+	 */
 	@Override
 	public List<BankingDetails> findMatchingDetails(String ibanStart) {
 		TypedQuery<BankingDetails> query = entityManager()
@@ -53,7 +71,13 @@ public class BankingDetailsRepository extends AbstractRepository<BankingDetails>
 		query.setParameter("iban", ibanStart);
 		return query.getResultList();
 	}
-	
+
+	/**
+	 * Validiert die Bankdaten
+	 *
+	 * @param bankingDetails Die Bankdaten vom Typ BankingDetails
+	 * @return Gibt das Array der Fehlermeldungen zurück
+	 */
 	private List <String> validate (BankingDetails bankingDetails) {
 		List <String> messages = new ArrayList<>();
 		if (bankingDetails.getIban() == null || !bankingDetails.getIban().trim().matches(IBAN_PATTERN)) {

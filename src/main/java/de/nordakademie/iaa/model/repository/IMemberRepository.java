@@ -6,9 +6,9 @@ import de.nordakademie.iaa.model.Member;
 import de.nordakademie.iaa.model.repository.MemberRepository.SearchCriteria;
 
 /**
- * @author Maik Voigt
- *
  * Interface des Repository der Mitglieder
+ *
+ * @author Maik Voigt
  */
 
 public interface IMemberRepository {

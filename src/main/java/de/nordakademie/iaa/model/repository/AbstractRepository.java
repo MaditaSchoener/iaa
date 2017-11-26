@@ -4,9 +4,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * @author Maik Voigt
- *
  * Abstakte Repository Klasse mit persist, find, update und delete Definitionen. Verwendet den EntityManager.
+ *
+ * @author Maik Voigt
  */
 
 abstract class AbstractRepository<TYPE> {
