@@ -1,7 +1,7 @@
 /*
-// @author Madita Schöner
-//
-// Controller für die contributionList.hmtl
+* @author Madita Schöner
+*
+* Controller für die contributionList.hmtl
 */
 
 

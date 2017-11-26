@@ -1,5 +1,5 @@
 /*
-// @author Madita Schöner
+* @author Madita Schöner
 */
 'use strict';
 

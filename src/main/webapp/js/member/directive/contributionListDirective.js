@@ -1,5 +1,7 @@
+
 /*
-// @author Madita Schöner
+* @author Madita Schöner
+* Referenz-Datei für contributionList.html. Verwist auf die zugehörige view und auf den Controller
 */
 'use strict';
 

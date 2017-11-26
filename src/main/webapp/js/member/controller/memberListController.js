@@ -1,7 +1,7 @@
 /*
-// @author Madita Schöner
-//
-// Controller für memberList.html
+* @author Madita Schöner
+*
+* Controller für memberList.html
 */
 'use strict';
 
@@ -55,7 +55,7 @@ application.controller('memberListController', [
 
 	/*
 	* Setzen des ausgewählten Mitglieds und Setzen des zu bearbeitenden Mitglieds
-	* 
+	*
 	* @public
 	* @param member {Object} Mitglied
 	* */
