@@ -6,6 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author Maik Voigt
+ *
+ * Fachmodell für die Mitgliederbeiträge. Besteht aus Betrag, Jahr und einem Boolean, der Auskunft gibt ob bezahlt wurde.
+ */
+
 @Entity
 @Table(name="CONTRIBUTION")
 public class Contribution {

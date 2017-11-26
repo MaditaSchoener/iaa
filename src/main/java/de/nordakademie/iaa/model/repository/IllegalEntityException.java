@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Maik Voigt
+ *
+ * Exceptionklasse für die Repository Schicht
+ */
+
 public class IllegalEntityException  extends Exception {
 
 	private static final long serialVersionUID = -5672734137052028836L;

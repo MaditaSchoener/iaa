@@ -3,6 +3,12 @@ package de.nordakademie.iaa.model.repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+/**
+ * @author Maik Voigt
+ *
+ * Abstakte Repository Klasse mit persist, find, update und delete Definitionen. Verwendet den EntityManager.
+ */
+
 abstract class AbstractRepository<TYPE> {
 
 	@PersistenceContext

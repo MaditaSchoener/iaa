@@ -21,6 +21,16 @@ import javax.persistence.PrePersist;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+/**
+ * @author Maik Voigt
+ *
+ * Fachmodell für ein Mitglied. Besteht aus einer generierten Mitglieds ID, dem Vornamen, Nachnamen, Geburtstag,
+ * Beitrittsdatum, der Mitgliedsart, dem Inaktivitätszustand (wenn gekündigt wird), dem eventuellen Familienmitglied
+ * und den Bankdetails.
+ * Beinhaltet  auch die Funktionalität, den Mitgliedsbeitrag für andere Jahre festzulegen, sowie Prüfungen ob der
+ * Beitrag sich im nächsten Jahr ändert.
+ */
+
 @Entity
 @Table(name="MEMBER")
 public class Member implements Serializable {

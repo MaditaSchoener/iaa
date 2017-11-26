@@ -4,6 +4,12 @@ import java.util.List;
 
 import de.nordakademie.iaa.model.Address;
 
+/**
+ * @author Maik Voigt
+ *
+ * Interface des Repository der Adressen
+ */
+
 public interface IAddressRepository {
 
 	Address create (Address address) throws IllegalEntityException;

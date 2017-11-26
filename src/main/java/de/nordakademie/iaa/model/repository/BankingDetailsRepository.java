@@ -9,6 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import de.nordakademie.iaa.model.BankingDetails;
 
+/**
+ * @author Maik Voigt
+ *
+ * Repository der Bankdetails. Beinhaltet Autocomplete Abfragen und Validierungen.
+ */
+
 @Repository
 public class BankingDetailsRepository extends AbstractRepository<BankingDetails> implements IBankingDetailsRepository {
 

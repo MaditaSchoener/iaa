@@ -4,6 +4,16 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * @author Maik Voigt
+ *
+ * Fachmodell für die Adressen, welche aus Straße, Hausnummer, Stadt und ZIP bestehen. Zusätzlich wird ein Objekt
+ * der Adressen Identifikation erzeugt, damit Adressen verglichen werden können und Duplikate gemäß Anforderung
+ * verhindert werden.
+ */
+
+
+
 @Entity
 @Table(name="ADDRESS")
 public class Address {

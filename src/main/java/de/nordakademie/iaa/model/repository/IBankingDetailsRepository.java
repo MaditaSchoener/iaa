@@ -4,6 +4,12 @@ import java.util.List;
 
 import de.nordakademie.iaa.model.BankingDetails;
 
+/**
+ * @author Maik Voigt
+ *
+ * Interface des Repository der Bankdaten
+ */
+
 public interface IBankingDetailsRepository {
 
 	BankingDetails findByIban (String iban);

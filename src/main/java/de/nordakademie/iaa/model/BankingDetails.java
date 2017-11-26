@@ -5,6 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author Maik Voigt
+ *
+ * Fachmodell für die Bankdetails, welche aus IBAN und BIC bestehen.
+ */
+
 @Entity
 @Table(name="BANKING_DETAILS")
 public class BankingDetails {

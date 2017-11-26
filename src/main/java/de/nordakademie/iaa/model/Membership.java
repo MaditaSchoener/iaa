@@ -4,6 +4,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+/**
+ * @author Maik Voigt
+ *
+ * Aufzählung der Mitgliedsarten, sowie der zugehörigen Preise. Festlegung des Familienrabatts.
+ */
+
 public enum Membership {
 
 	FULL("Vollmitgliedschaft", 25),

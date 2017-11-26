@@ -4,6 +4,13 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 
+/**
+ * @author Maik Voigt
+ *
+ * Fachmodell für die Adressen Identifikation, sodass ein Vergleich von Adressen ermöglicht wird und
+ * Duplikate verhindert werden
+ */
+
 @Embeddable
 public class AddressIdentification implements Serializable {
 

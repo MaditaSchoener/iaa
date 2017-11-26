@@ -9,6 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import de.nordakademie.iaa.model.Address;
 
+/**
+ * @author Maik Voigt
+ *
+ * Repository der Adressen. Straßennamen und Stadtnamen müssen der RegEx enstprechen.
+ * Zusätzliche Abfrage für Auto Completion der Straßennamen sowie Validierung der Adresse.
+ */
+
 @Repository
 public class AddressRepository extends AbstractRepository<Address> implements IAddressRepository {
 

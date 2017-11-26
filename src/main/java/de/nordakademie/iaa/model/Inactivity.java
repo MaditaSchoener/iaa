@@ -10,6 +10,13 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+/**
+ * @author Maik Voigt
+ *
+ * Fachmodell für die Information, dass ein Mitglied gekündigt hat. Besteht aus Kündigungs- und Austrittsdatum, sowie
+ * dem Referenzmitglied.
+ */
+
 @Entity
 @Table(name="INACTIVE_MEMBERSHIP")
 public class Inactivity implements Serializable {
