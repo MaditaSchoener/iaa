@@ -1,3 +1,7 @@
+/*
+// @author Madita Schöner
+*/
+
 'use strict';
 
 application.controller('memberFormController', [

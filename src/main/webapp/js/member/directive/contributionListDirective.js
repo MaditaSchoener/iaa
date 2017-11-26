@@ -1,3 +1,6 @@
+/*
+// @author Madita Schöner
+*/
 'use strict';
 
 application.directive('contributionList', () => ({

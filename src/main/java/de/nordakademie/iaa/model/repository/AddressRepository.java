@@ -20,7 +20,7 @@ import de.nordakademie.iaa.model.Address;
 public class AddressRepository extends AbstractRepository<Address> implements IAddressRepository {
 
 	private static final String STREET_PATTERN = "[a-zA-Zдцья]+( )?[0-9]+[a-zA-Z]?";
-	private static final String CITY_PATTERN = "[a-zA-Zдцья]+";
+	private static final String CITY_PATTERN = "[a-zA-Zдцья]+( )?[a-zA-Z]+";
 	
 	public AddressRepository() {
 		super(Address.class);
