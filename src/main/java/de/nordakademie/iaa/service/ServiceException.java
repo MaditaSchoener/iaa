@@ -3,6 +3,11 @@ package de.nordakademie.iaa.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+/**
+ * @author Maik Voigt
+ *
+ * Exceptionklasse für die Service Schicht
+ */
 
 public class ServiceException extends Exception {
 

@@ -1,6 +1,11 @@
 package de.nordakademie.iaa.service;
 
 import java.util.List;
+/**
+ * Interface des Services der Adressen
+ *
+ * @author Maik Voigt
+ */
 
 import de.nordakademie.iaa.model.Address;
 
