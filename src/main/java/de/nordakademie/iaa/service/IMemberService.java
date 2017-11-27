@@ -4,7 +4,11 @@ import java.util.List;
 
 import de.nordakademie.iaa.model.Contribution;
 import de.nordakademie.iaa.model.Member;
-
+/**
+ * Interface des Services der Mitglieder
+ *
+ * @author Maik Voigt
+ */
 public interface IMemberService {
 
 	List <Member> findAll();
