@@ -19,6 +19,11 @@ import de.nordakademie.iaa.model.Membership;
 import de.nordakademie.iaa.service.IMemberService;
 import de.nordakademie.iaa.service.ServiceException;
 
+/**
+ * REST-Services für das Bankdetailsobjekt, welche vom Frontend aufgerufen werden können.
+ *
+ * @author Maik Voigt
+ */
 @RestController
 @RequestMapping("/member")
 public class MemberController {
@@ -31,16 +36,31 @@ public class MemberController {
 		return memberService.findAll();
 	}
 
+	/**
+	 * Aufruf zum Finden eines Mitglieds mit übergebener ID
+	 * @param id ID als Long
+	 * @return gibt ein Mitglied als Member zurück
+	 */
 	@GetMapping(path = "find")
 	public Member findOne(@RequestParam(name = "id", required = true) Long id) {
 		return memberService.find(id);
 	}
 
+	/**
+	 * Ruft die Mitgliedsarten auf und gibt diese zurück
+	 * @return Mitgliedsarten als Enum
+	 */
 	@GetMapping(path = "/types")
 	public Membership[] readTypes() {
 		return Membership.values();
 	}
 
+	/**
+	 * Speichert ein übergebenes Mitglied
+	 * @param member Mitglied vom Typ Member
+	 * @return Gibt das Mitglied mit ID zurück
+	 * @throws RestException Exception, falls Mitglied nicht erstellt werden konnte
+	 */
 	@PostMapping(path = "/persist")
 	public Member saveMember(@RequestBody final Member member) throws RestException {
 		try {
@@ -50,6 +70,12 @@ public class MemberController {
 		}
 	}
 
+	/**
+	 * Aktualisiert ein Mitgliedsobjekt
+	 * @param member Mitglied vom Typ Member
+	 * @return Gibt das Mitglied mit ID zurück
+	 * @throws RestException Exception, wenn Mitglied nicht aktualisiert werden konnte
+	 */
 	@PostMapping(path = "/update")
 	public Member updateMember(@RequestBody final Member member) throws RestException {
 		try {
@@ -59,11 +85,22 @@ public class MemberController {
 		}
 	}
 
+	/**
+	 * Erstellt aus einer Filterkriterium
+	 * @param blueprint Ein Mitgliedsobjekt als Blueprint
+	 * @return Liefert eine Ergebnisliste
+	 */
 	@PostMapping(path = "/search")
 	public List<Member> searchMatchingMember(@RequestBody final Member blueprint) {
 		return memberService.search(blueprint);
 	}
 
+	/**
+	 * Kündigt einem Mitglied die Mitgliedschaft
+	 * @param member Mitglied vom Typ Member
+	 * @return Gibt das Mitglied mit ID zurück
+	 * @throws RestException Exception, wenn Mitgliedschaft nicht gekündigt werden konnte
+	 */
 	@PostMapping(path = "/cancel")
 	public Member cancelMember(@RequestBody final Member member) throws RestException {
 		try {
@@ -73,6 +110,12 @@ public class MemberController {
 		}
 	}
 
+	/**
+	 * Löscht ein Mitglied
+	 * @param member Mitglied vom Typ Member
+	 * @return Gibt das Mitglied mit ID zurück
+	 * @throws RestException Exception, falls Löschen fehlschlägt
+	 */
 	@PostMapping(path = "/delete")
 	public Member deleteMember(@RequestBody final Member member) throws RestException {
 		try {
@@ -82,14 +125,20 @@ public class MemberController {
 		}
 	}
 
+	/**
+	 * Berechnet den Mitgliedsbeitrag für ein Mitglied
+	 * @param member Mitglied vom Typ Member
+	 * @return Gibt den Mitgliedsbeitrag zurück
+	 */
 	@PostMapping(path = "/contribution")
 	public Contribution calculateContribution(@RequestBody final Member member) {
 		return memberService.calculateContribution(member);
 	}
 
-	
-	
-	
+	/**
+	 * Exceptionhandler für MemberController
+	 * @param ex Exception vom Typ RestException
+	 */
 	@ExceptionHandler(RestException.class)
 	public ResponseEntity<Object> handleError(RestException ex) {
 		return new ResponseEntity<Object>(ex, HttpStatus.INTERNAL_SERVER_ERROR);

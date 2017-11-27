@@ -20,6 +20,11 @@ import de.nordakademie.iaa.model.repository.IMemberRepository;
 import de.nordakademie.iaa.model.repository.IllegalEntityException;
 import de.nordakademie.iaa.model.repository.MemberRepository.SearchCriteria;
 
+/**
+ * Service Klasse vom Mitglied
+ *
+ * @author Maik Voigt
+ */
 @Service
 public class MemberService implements IMemberService {
 
@@ -41,7 +46,13 @@ public class MemberService implements IMemberService {
 	public Member find(Long id) {
 		return repository.find(id);
 	}
-	
+
+	/**
+	 * Erstellt ein Mitglied und bestimmt den Mitgliedsbeitrag
+	 * @param member Mitglied vom Typ Member
+	 * @return Gibt das Mitglied mit ID zurück
+	 * @throws ServiceException Exception, falls Mitglied nicht erstellt werden konnte
+	 */
 	@Override
 	@Transactional
 	public Member create(Member member) throws ServiceException {
@@ -54,7 +65,12 @@ public class MemberService implements IMemberService {
 		}
 	}
 
-	
+	/**
+	 * Aktualisiert ein Mitglied und den zugehörigen Mitgliedsbeitrag
+	 * @param member Mitglied vom Typ Member
+	 * @return Gibt das Mitglied mit ID zurück
+	 * @throws ServiceException Exception, falls Mitglied nicht aktualisiert werden konnte
+	 */
 	@Override
 	@Transactional
 	public Member update(Member member) throws ServiceException {
@@ -70,7 +86,13 @@ public class MemberService implements IMemberService {
 			throw new ServiceException(e.getMessages());
 		}
 	}
-	
+
+	/**
+	 * Löscht ein Mitglied, falls es länger als 3 Monate ausgetreten ist
+	 * @param member Mitglied vom Typ Member
+	 * @return Gibt das Mitglied zurück
+	 * @throws ServiceException Exception, falls Mitglied seit weniger als 3 Monaten ausgetreten ist
+	 */
 	@Override
 	public Member delete(Member member) throws ServiceException {
 //		delete only allowed after 3 months
@@ -81,7 +103,14 @@ public class MemberService implements IMemberService {
 			throw new ServiceException("Das Löschen inaktiver Mitglieder ist erst 3 Monate nach Vereinsaustritt möglich.");
 		}
 	}
-	
+
+	/**
+	 * Kündigt die Mitgliedschaft eines Mitglieds und setzt die Datumwerte des Kündigungsdatums
+	 * und des Austrittsdatums
+	 * @param member Mitglied vom Typ Member
+	 * @return Gibt das Mitglied mit ID zurück
+	 * @throws ServiceException Exception, falls Kündigung fehlgeschlagen ist
+	 */
 	@Override
 	@Transactional
 	public Member cancelContract(Member member) throws ServiceException {
@@ -96,7 +125,12 @@ public class MemberService implements IMemberService {
 				.forEach(member::removeContribution);
 		return this.update(member);
 	}
-	
+
+	/**
+	 * Sucht anhand eines oder mehrerer Filterkriterien ein passendes Mitglied
+	 * @param member Mitglied zu finden vom Typ Member
+	 * @return Gibt die Ergebnisliste zurück
+	 */
 	@Override
 	public List<Member> search(Member member) {
 		if (member.getNumber() != null) {
@@ -124,7 +158,12 @@ public class MemberService implements IMemberService {
 			return repository.search(criteria);
 		}
 	}
-	
+
+	/**
+	 * Stellt die Redundanzfreiheit von Adresse und Bankdetails sicher
+	 * @param member Mitglied vom Typ Member
+	 * @throws ServiceException Exception falls EntityException
+	 */
 	private void mergeAssociations(Member member) throws ServiceException {
 		try {
 			mergeMembersAddress(member);
@@ -134,6 +173,12 @@ public class MemberService implements IMemberService {
 		}
 	}
 
+	/**
+	 * Prüft, ob eine Adresse bereits existiert und verweist in diesem Fall auf die bereits vorhandene
+	 * Adresse. Falls sie nicht existiert, wird ein neues Adressenobjekt angelegt
+	 * @param member Mitglied vom Typ Member
+	 * @throws IllegalEntityException Exception, falls Kunde keine Adresse hat
+	 */
 	private void mergeMembersAddress(Member member) throws IllegalEntityException {
 		Address memberAddress = member.getAddress();
 		if (memberAddress == null) {
@@ -146,6 +191,13 @@ public class MemberService implements IMemberService {
 			member.setAddress(persistentAddress);
 		}
 	}
+
+	/**
+	 * Prüft, ob ein Bankdetailobjekt bereits existiert und verweist in diesem Fall auf das bereits vorhandene
+	 * Objekt. Falls es nicht existiert, wird ein neues Bankdetailsobjekt angelegt
+	 * @param member Mitglied vom Typ Member
+	 * @throws IllegalEntityException Exception, falls Kunde keine Bankdetails hat
+	 */
 	private void mergeMembersBankingDetails(Member member) throws IllegalEntityException {
 		BankingDetails bankingDetails = member.getBankingDetails();
 		if (bankingDetails == null || bankingDetails.getIban() == null) {
@@ -158,7 +210,12 @@ public class MemberService implements IMemberService {
 			member.setBankingDetails(persistentDetails);
 		}
 	}
-	
+
+	/**
+	 * Berechnet den Mitgliedsbeitrag abhängig von Mitgliedschaft und ob Mitglied den Familienrabatt bekommt
+	 * @param member Mitglied vom Typ Member
+	 * @return Mitgliedspreis als Integer
+	 */
 	@Transactional(readOnly=true)
 	public Contribution calculateContribution (Member member) {
 		Contribution result = new Contribution();
