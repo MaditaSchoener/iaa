@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author Maik Voigt
- *
  * Exceptionklasse für die Repository Schicht
+ *
+ * @author Maik Voigt
  */
 
 public class IllegalEntityException  extends Exception {

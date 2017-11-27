@@ -1,4 +1,4 @@
-/*
+/**
 * @author Madita Schöner
 *
 * Controller für memberList.html
@@ -10,7 +10,7 @@ application.controller('memberListController', [
   'memberService',
   ($scope, memberService) => {
 
-	/*
+	/**
 	* Normalisiert alle vom Server gelieferten Dates aus der Mitgliederliste
 	* @private
 	* @param list {array} Mitgliederliste
@@ -22,14 +22,14 @@ application.controller('memberListController', [
 		  $scope.members = list;
 	  };
 
-	/*
+	/**
 	* Abrufen der Mitglieder und Normalisierung der Dates
 	* @public
 	* @param list {array} Mitgliederliste
 	* */
 	  memberService.findAll().then(response => _acceptMemberList(response.data));
 
-	/*
+	/**
 	* Übergibt die Filterkriterien an den memberService
 	* @public
 	* @param member {Object} Filterkriterium
@@ -44,7 +44,7 @@ application.controller('memberListController', [
 		  });
 	  }
 
-	/*
+	/**
 	* Leeren der Filterkriterien
 	* @public
 	* */
@@ -53,7 +53,7 @@ application.controller('memberListController', [
 		  $scope.searchMember ($scope.memberToSearch);
 	  }
 
-	/*
+	/**
 	* Setzen des ausgewählten Mitglieds und Setzen des zu bearbeitenden Mitglieds
 	*
 	* @public

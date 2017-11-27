@@ -1,4 +1,4 @@
-/*
+/**
 * @author Madita Schöner
 * Referenz-Datei für memberForm.html. Verweist auf die zugehörige view und auf den Controller
 */

@@ -7,6 +7,7 @@ import javax.persistence.Embeddable;
 /**
  * Fachmodell für die Adressen Identifikation, sodass ein Vergleich von Adressen ermöglicht wird und
  * Duplikate verhindert werden
+ *
  * @author Maik Voigt
  */
 

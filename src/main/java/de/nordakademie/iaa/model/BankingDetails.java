@@ -7,6 +7,7 @@ import javax.persistence.Table;
 
 /**
  * Fachmodell für die Bankdetails, welche aus IBAN und BIC bestehen.
+ *
  * @author Maik Voigt
  */
 

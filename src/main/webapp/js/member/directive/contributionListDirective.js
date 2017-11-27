@@ -1,8 +1,9 @@
 
-/*
+/**
 * @author Madita Schöner
-* Referenz-Datei für contributionList.html. Verwist auf die zugehörige view und auf den Controller
+* Referenz-Datei für contributionList.html. Verweist auf die zugehörige view und auf den Controller
 */
+
 'use strict';
 
 application.directive('contributionList', () => ({

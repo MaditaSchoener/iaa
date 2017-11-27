@@ -1,4 +1,4 @@
-/*
+/**
 * @author Madita Schöner
 */
 'use strict';

@@ -1,4 +1,4 @@
-/*
+/**
 * @author Madita Schöner
 *
 * Controller für die main.html

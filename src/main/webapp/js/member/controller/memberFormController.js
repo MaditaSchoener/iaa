@@ -1,4 +1,4 @@
-/*
+/**
 * @author Madita Schöner
 *
 * Controller für memberForm.html
@@ -14,7 +14,7 @@ application.controller('memberFormController', [
   ($scope, memberService, addressService, bankingDetailsService) => {
 	 
 	  memberService.readMemberships().then(response => $scope.memberships = response.data);
-	/*
+	/**
 	* Setzt das neu erstellte Mitglied als ausgewähltes Objekt der Liste. Und ersetzt
 	* die vom Server gelieferten Dates mit Java Script Dates des neuen Mitglieds
 	* @private
@@ -27,7 +27,7 @@ application.controller('memberFormController', [
 		  $scope.selectMember(member);
 	  };
 
-	/*
+	/**
 	* Aktion beim Auswählen eines Familienmitglieds. Übergabe der Familienmitgliedparameter
 	* @public
 	* */
@@ -47,7 +47,7 @@ application.controller('memberFormController', [
 		  }  
 	  }
 
-	/*
+	/**
 	* Zurücksetzen des Mitgliedformulars
 	* Setzen des zu bearbeitenden Mitglieds
 	* @public
@@ -68,7 +68,7 @@ application.controller('memberFormController', [
 		  }
 	  }
 
-	/*
+	/**
 	* Speichern des Mitglieds. Falls keine Mitgliedsnummer übergeben wurde, erstellllt der
 	* memberService ein neues Mitglied. Andernfalls werden die Daten aktualisiert
 	* @public
@@ -85,7 +85,7 @@ application.controller('memberFormController', [
 		  }
 	  }
 
-	/*
+	/**
 	* Übergabe des Mitglieds an den memberService zur Kündigung der Mitgliedschaft
 	* @public
 	* @param member {Object}  Mitglied
@@ -93,7 +93,7 @@ application.controller('memberFormController', [
 	  $scope.cancelMember = (member) => {
 		  memberService.cancelMember(member).then(_acceptResponseData);
 	  }
-	/*
+	/**
 	* Übergabe des Objekts an den memberService zum Löschen des Objektes und
 	* Anpassung des Indexes der Mitgliederliste
 	* @public
@@ -110,7 +110,7 @@ application.controller('memberFormController', [
 			  $scope.selectMember({});
 		  }, $scope.displayError);
 	  }
-	/*
+	/**
 	* Ermittlung des zukünftigen Beitrages
 	* @public
 	* @param member {Object} Mitglied
@@ -121,7 +121,7 @@ application.controller('memberFormController', [
 		  });
 	  }
 
-	/*
+	/**
 	* Anzeigen der zur verfügung stehenden Straßen als Vorschlag
 	* @public
 	* */
@@ -130,7 +130,7 @@ application.controller('memberFormController', [
 		  addressService.availableStreets(start).then(response => $scope.streets = response.data);
 		  $scope.updateZips(start);
 	  }
-	/*
+	/**
 	* Anzeigen der zur verfügung stehenden PLZ als Vorschlag
 	* @public
 	* @param street {String} Straße
@@ -140,7 +140,7 @@ application.controller('memberFormController', [
 			  $scope.zips = response.data;
 		  });
 	  }
-	/*
+	/**
 	* Anzeigen der zur verfügung stehenden Orte als Vorschlag
 	* @public
 	* */
@@ -150,7 +150,7 @@ application.controller('memberFormController', [
 		  addressService.findAddress(street, zip).then(response => $scope.member.address.city = response.data.city);
 	  }
 
-	/*
+	/**
 	* Anzeigen der zur verfügung stehenden IBANs als Vorschlag
 	* @public
 	* */

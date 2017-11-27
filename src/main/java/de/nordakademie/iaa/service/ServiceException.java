@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 /**
- * @author Maik Voigt
- *
  * Exceptionklasse für die Service Schicht
+ *
+ * @author Maik Voigt
  */
 
 public class ServiceException extends Exception {
@@ -25,7 +25,11 @@ public class ServiceException extends Exception {
 	public ServiceException() {
 		this (new ArrayList<>());
 	}
-	
+
+	/**
+	 * Fügt einen String an das Stringarray mit den Fehlernachrichten an
+	 * @param message Nachricht als String
+	 */
 	public void addMessage (String message) {
 		messages.add(message);
 	}	

@@ -1,4 +1,4 @@
-/*
+/**
 * @author Madita Schöner
 * Verweise auf die Rest Schnittstelle
 *
