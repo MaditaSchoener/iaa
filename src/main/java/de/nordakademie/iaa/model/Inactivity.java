@@ -11,10 +11,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * @author Maik Voigt
- *
  * Fachmodell für die Information, dass ein Mitglied gekündigt hat. Besteht aus Kündigungs- und Austrittsdatum, sowie
  * dem Referenzmitglied.
+ *
+ * @author Maik Voigt
  */
 
 @Entity

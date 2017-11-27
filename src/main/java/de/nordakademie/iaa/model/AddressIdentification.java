@@ -5,10 +5,9 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 
 /**
- * @author Maik Voigt
- *
  * Fachmodell für die Adressen Identifikation, sodass ein Vergleich von Adressen ermöglicht wird und
  * Duplikate verhindert werden
+ * @author Maik Voigt
  */
 
 @Embeddable
@@ -31,7 +30,11 @@ public class AddressIdentification implements Serializable {
 	public void setZip(int zip) {
 		this.zip = zip;
 	}
-	
+
+	/**
+	 * Erstellt einen Hash-Code für Hash-Tabellen
+	 * @return Hashwert als Integer
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -40,6 +43,12 @@ public class AddressIdentification implements Serializable {
 		result = prime * result + zip;
 		return result;
 	}
+
+	/**
+	 * Definition von Vergleichsoperationen
+	 * @param obj Das Vergleichsobjekt von Typ Object
+	 * @return Vergleichsresultat als Boolean
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

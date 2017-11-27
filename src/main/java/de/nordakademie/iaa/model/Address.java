@@ -5,14 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * @author Maik Voigt
- *
  * Fachmodell für die Adressen, welche aus Straße, Hausnummer, Stadt und ZIP bestehen. Zusätzlich wird ein Objekt
  * der Adressen Identifikation erzeugt, damit Adressen verglichen werden können und Duplikate gemäß Anforderung
  * verhindert werden.
+ *
+ * @author Maik Voigt
  */
-
-
 
 @Entity
 @Table(name="ADDRESS")
@@ -43,6 +41,11 @@ public class Address {
 	public void setCity(String city) {
 		this.city = city;
 	}
+
+	/**
+	 * Erstellt einen Hash-Code für Hash-Tabellen
+	 * @return Hashwert als Integer
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -50,6 +53,12 @@ public class Address {
 		result = prime * result + ((identification == null) ? 0 : identification.hashCode());
 		return result;
 	}
+
+	/**
+	 * Definition von Vergleichsoperationen
+	 * @param obj Das Vergleichsobjekt von Typ Object
+	 * @return Vergleichsresultat als Boolean
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
